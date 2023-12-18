@@ -1,6 +1,7 @@
-from tkinter import filedialog, messagebox, Menu, PhotoImage
+from tkinter import filedialog ,messagebox, Menu
 import tkinter
 from pytube import YouTube
+import os
 
 
 #ventana de tkinter
@@ -23,14 +24,15 @@ box_text = tkinter.Entry(window,width=31)
 box_text.pack()
 
 file = tkinter.Menu(barmenu)
-barmenu.add_cascade(menu=file,label="Archivo")
+#barmenu.add_cascade(menu=file,label="Archivo")
 
 #accion
 barmenu.add_command(label="Salir",
     accelerator="Ctrl+s",
     command=window.quit)
 
-
+#barra de progreso 
+barprogress = bar1 = tkinter.P
 
 
 #funciones
@@ -61,16 +63,21 @@ def ejecutaAudio():
         text2 = box_text.get()
         pasar2 = ""
         pasar2 = text2
+        #verificar la url
         try:
                 yt = YouTube(pasar2)
         except:
                 messagebox.showerror(title="!!Error¡¡",message="Error al descargar verifique la ruta")
 
-        mp3_files = yt.streams.filter(only_audio=True)
-        mp3descargar =  mp3_files.get_audio_only()
+        #que se se haya descargado correctamente
+        
         try:
+                mp3_files = yt.streams.filter(only_audio=True).first().download(output_path=archivo2)
+                new_file = os.path.splitext(mp3_files)
+                os.rename(mp3_files,new_file[0]+'.mp3')
+                
+               
                 messagebox.showinfo(title="!Descargando¡",message="la descarga es exitosa :D")
-                mp3descargar.download(output_path=archivo2)
         
         except:
                 messagebox.showerror(title="!!Error¡¡",message="Error al descargar verifique la ruta")
