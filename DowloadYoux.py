@@ -32,7 +32,6 @@ barmenu.add_command(label="Salir",
     command=window.quit)
 
 #barra de progreso 
-barprogress = bar1 = tkinter.P
 
 
 #funciones
